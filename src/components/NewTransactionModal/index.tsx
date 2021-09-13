@@ -10,7 +10,7 @@ interface NewTransactionModalProps {
 }
 
 function NewTransactionModal({ isOpenModal, onCloseModal} : NewTransactionModalProps) {
- const [selectedTypeEntry, setSelectedTypeEntry] = useState('')
+ const [selectedTypeEntry, setSelectedTypeEntry] = useState('entrada')
 
   return (
     <Modal 
@@ -22,7 +22,11 @@ function NewTransactionModal({ isOpenModal, onCloseModal} : NewTransactionModalP
       <Container> 
         <h2>Cadastrar Transação</h2>
         <input type="text" placeholder='Titulo' name="title" id="title" />
-        <input type="number" placeholder='Valor' name="amount" id="amount" />
+        <input 
+          type="number"
+          placeholder='Valor'
+            className={selectedTypeEntry === 'saida' ? 'input-saida' : 'input-entrada'}
+            name="amount" id="amount" />
         <div className='react-modal-type'>
           <button 
             type='button' 

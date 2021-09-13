@@ -24,6 +24,14 @@ input {
     color: var(--text-body);
   }
 
+  &.input-entrada {
+    color: var(--green);
+  }
+
+  &.input-saida {
+    color: var(--red);
+  }
+
   & + input {
     margin-top: 1rem;
   }
@@ -53,13 +61,14 @@ input {
     }
 
     &:hover {
-      filter: brightness(1);
       transform: scale(1);
     }
 
     &.selected {
       filter: brightness(1);
       transform: scale(1);
+      font-weight: 600;
+      box-shadow:  0 0 16px rgba(0,0,0,0.7);
     }
   }
 }
