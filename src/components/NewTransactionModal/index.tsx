@@ -1,16 +1,27 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Modal from 'react-modal'
+import { api } from '../../services/api'
 import { Container } from './styles'
 
 Modal.setAppElement('#root')
 
+// Rafael Moura - Ciar nova Transação no Modal
 interface NewTransactionModalProps {
   isOpenModal: boolean;
   onCloseModal: () => void;
 }
 
 function NewTransactionModal({ isOpenModal, onCloseModal} : NewTransactionModalProps) {
- const [selectedTypeEntry, setSelectedTypeEntry] = useState('entrada')
+  const [title, setTitle] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [type, setType] = useState('deposit')
+  const [category, setCategory] = useState('')
+
+  const handleCreateNewTransaction = (event: FormEvent) => {
+    event.preventDefault()
+    const data = {title,amount,type,category};
+    api.post('/transactions', data)
+  }
 
   return (
     <Modal 
@@ -19,30 +30,38 @@ function NewTransactionModal({ isOpenModal, onCloseModal} : NewTransactionModalP
       overlayClassName='react-modal-overlay'
       className='react-modal-content'
     >
-      <Container> 
-        <h2>Cadastrar Transação</h2>
-        <input type="text" placeholder='Titulo' name="title" id="title" />
+      <Container onSubmit={handleCreateNewTransaction}> 
+        <h2>Cadastrar Transação {type === 'deposit' ? '- de Entrada' : '- de Saida'}</h2>
+        <input type="text" 
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+        placeholder='Titulo' name="title" id="title" />
         <input 
           type="number"
+          value={amount}
+          onChange={(event) => setAmount(+event.target.value)}
           placeholder='Valor'
-            className={selectedTypeEntry === 'saida' ? 'input-saida' : 'input-entrada'}
+            className={type === 'withdraw' ? 'input-withdraw' : 'input-deposit'}
             name="amount" id="amount" />
         <div className='react-modal-type'>
           <button 
             type='button' 
-            className={selectedTypeEntry === 'entrada' ? 'selected' : ''}
-            onClick={() => setSelectedTypeEntry('entrada')}
+            className={type === 'deposit' ? 'selected' : ''}
+            onClick={() => setType('deposit')}
           >
             Entrada
           </button>
           <button 
             type='button'
-            className={selectedTypeEntry === 'saida' ? 'selected' : ''}
-            onClick={() => setSelectedTypeEntry('saida')}
+            className={type === 'withdraw' ? 'selected' : ''}
+            onClick={() => setType('withdraw')}
           >
             Saida</button>
         </div>
-        <input type="text" placeholder='Categoria' name="category" id="category" />
+        <input type="text"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+          placeholder='Categoria' name="category" id="category" />
         <button type='submit'>Cadastrar</button>
       </Container>
     </Modal>

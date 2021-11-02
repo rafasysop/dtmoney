@@ -24,12 +24,15 @@ input {
     color: var(--text-body);
   }
 
-  &.input-entrada {
-    color: var(--green);
+  &.input-deposit {
+    /* color: var(--green); */
+    background: rgba(0,255,0,0.2);
+
   }
 
-  &.input-saida {
-    color: var(--red);
+  &.input-withdraw {
+    /* color: var(--red); */
+    background: rgba(255,0,0,0.2);
   }
 
   & + input {

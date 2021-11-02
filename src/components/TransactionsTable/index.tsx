@@ -6,18 +6,24 @@ import { api } from '../../services/api'
 
 function TransactionsTable() {
 
-  // interface = {
+   interface Transaction {
+        id: number;
+        title: string;
+        type: string;
+        amount: number;
+        category: string;
+        createdAt: string;
+      }
+    
 
-  // }
-
-  const [data, setData] = useState([]);
+  const [transactions , setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     api.get('/transactions')
-      .then(resp => setData(resp.data))
+      .then(resp => setTransactions(resp.data.transactions))
   }, [])
 
-  console.log(data);
+  console.log('aqui o stado', transactions);
 
   return (
     <Container>
@@ -31,18 +37,18 @@ function TransactionsTable() {
           </tr>
         </thead>
         <tbody>
+      {transactions.map(transaction => (
+                <tr key={transaction.id}>
+                  <td>{transaction.title}</td>
+                  <td className={transaction.type}>{ Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(transaction.amount)}</td>
+                  <td>{transaction.category}</td>
+                  <td>{ Intl.DateTimeFormat('pt-BR').format(new Date(transaction.createdAt))}</td>
+                </tr>
+              ))}
           
         </tbody>
       </table>
     </Container>
   )
 }
-// {data && data.map( transaction => (
-//             <tr key={transaction.id}>
-//             <td>{transaction.title}</td>
-//             <td className={transaction.type}>R$ {transaction.amount}</td>
-//             <td>{transaction.category}</td>
-//             <td>{transaction.createdAt}</td>
-//           </tr>
-//           ))}
 export default TransactionsTable
