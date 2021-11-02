@@ -26,7 +26,15 @@ createServer({
           type: 'withdraw',
           category: 'Casa',
           createdAt: new Date('2012-02-14 11:00:00'),
-        }
+        },
+        {
+          id: 3,
+          title: 'Mae depositou',
+          amount: 30,
+          type: 'deposit',
+          category: 'Mae',
+          createdAt: new Date('2012-02-15 15:00:00'),
+        },
       ]
     })
   },
