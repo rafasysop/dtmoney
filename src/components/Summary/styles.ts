@@ -29,10 +29,15 @@ export const Container = styled.section`
       color: white;
       background-color: var(--green);
     }
+    &.negativo {
+      background-color: var(--red);
+    }
   }
 
   & header {
       display: flex;
       justify-content: space-between;
     }
+
+  
 `

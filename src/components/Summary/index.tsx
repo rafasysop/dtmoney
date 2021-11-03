@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { TransactionsContext } from "../../TransactionsContext";
 
 export function Summary() {
-  const transactions = useContext(TransactionsContext)
+  const { transactions } = useContext(TransactionsContext)
   const [deposit, setDeposit] = useState(0)
   const [withdraw, setWithdraw] = useState(0)
   const [total, setTotal] = useState(0)
@@ -45,7 +45,7 @@ export function Summary() {
         </header>
         <strong>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(withdraw)}</strong>
       </div>
-      <div>
+      <div className={total < 0 ? 'negativo' : ''}>
         <header>
           <p>Total</p>
           <img src={totalImg} alt="total" />
